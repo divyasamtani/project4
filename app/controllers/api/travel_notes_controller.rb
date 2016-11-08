@@ -1,4 +1,5 @@
 class API::TravelNotesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_travelnotes, only: [:index]
   before_action :set_travelnote, only: [:show, :create, :update, :destroy]
 

@@ -27,4 +27,10 @@ namespace :api do
 
     end
   end
+
+# FACEBOOK LOGIN
+  #   GET|POST       /omniauth/:provider/callback       devise_token_auth/omniauth_callbacks#redirect_callbacks
+  #   GET|POST       /omniauth/failure                  devise_token_auth/omniauth_callbacks#omniauth_failure
+  #   GET            /auth/:provider                    redirect(301)
+
 end
