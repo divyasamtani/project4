@@ -5,32 +5,38 @@ Rails.application.routes.draw do
 # root 'statics#index'
 
 namespace :api do
+
+# GET CURRENT USER INFO FOR PROFILE
+
+    get '/user' => "users#user_profile", defaults: {format: 'json'}
+    # GET     /api/user     api/users#user_profile {:format=>"json"}
+
+# GET ALL COUNTRIES
+
     resources :countries, only: [:index]
-    #    api_countries      GET           /api/countries                    api/countries#index
+    #  GET           /api/countries                    api/countries#index
+
+# GET CURRENT USER'S COUNTRIES
 
     scope '/user' do
       resources :user_countries, only: [:index, :create, :destroy], controller: 'user_countries', as: 'user_countries'
-    #    api_user_countries GET           /api/user/user_countries          api/user_countries#index
-    #                       POST          /api/user/user_countries          api/user_countries#create
-    #    api_user_country   DELETE        /api/user/user_countries/:id      api/user_countries#destroy
+    #  GET           /api/user/user_countries          api/user_countries#index
+    #  POST          /api/user/user_countries          api/user_countries#create
+    #  DELETE        /api/user/user_countries/:id      api/user_countries#destroy
+
+# GET CURRENT USER'S NOTES
 
       resources :travel_notes
 
-    # api_travel_notes      GET           /api/user/travel_notes            api/travel_notes#index
-    #                       POST          /api/user/travel_notes            api/travel_notes#create
-    #  new_api_travel_note  GET           /api/user/travel_notes/new        api/travel_notes#new
-    # edit_api_travel_note  GET           /api/user/travel_notes/:id/edit   api/travel_notes#edit
-    #      api_travel_note  GET           /api/user/travel_notes/:index     api/travel_notes#show
-    #                       PATCH         /api/user/travel_notes/:index     api/travel_notes#update
-    #                       PUT           /api/user/travel_notes/:index     api/travel_notes#update
-    #                       DELETE        /api/user/travel_notes/:index     api/travel_notes#destroy
+    #  GET           /api/user/travel_notes            api/travel_notes#index
+    #  POST          /api/user/travel_notes            api/travel_notes#create
+    #  GET           /api/user/travel_notes/new        api/travel_notes#new
+    #  GET           /api/user/travel_notes/:id/edit   api/travel_notes#edit
+    #  GET           /api/user/travel_notes/:index     api/travel_notes#show
+    #  PATCH         /api/user/travel_notes/:index     api/travel_notes#update
+    #  PUT           /api/user/travel_notes/:index     api/travel_notes#update
+    #  DELETE        /api/user/travel_notes/:index     api/travel_notes#destroy
 
     end
   end
-
-# FACEBOOK LOGIN
-  #   GET|POST       /omniauth/:provider/callback       devise_token_auth/omniauth_callbacks#redirect_callbacks
-  #   GET|POST       /omniauth/failure                  devise_token_auth/omniauth_callbacks#omniauth_failure
-  #   GET            /auth/:provider                    redirect(301)
-
 end

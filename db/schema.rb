@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110001300) do
+ActiveRecord::Schema.define(version: 20161110073543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "countries", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "country_code"
+    t.string   "continent"
   end
 
   create_table "friendships", force: :cascade do |t|
@@ -64,7 +66,7 @@ ActiveRecord::Schema.define(version: 20161110001300) do
     t.datetime "updated_at",                               null: false
     t.string   "location_status"
     t.text     "bio"
-    t.integer  "travel_percentage"
+    t.integer  "countries_visited"
     t.integer  "world_coverage"
     t.index ["email"], name: "index_users_on_email", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

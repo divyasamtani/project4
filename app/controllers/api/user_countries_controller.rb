@@ -7,12 +7,12 @@ class API::UserCountriesController < ApplicationController
   end
 
   def create
-    @usercountry = current_user.list_bookmarks.new(bookmark_params)
+    @usercountry = current_user.user_countries.new(usercountry_params)
 
     if @usercountry.save
-      render json: @bookmark
+      render json: @usercountry
     else
-      render json: @bookmark.errors.messages, status: 422
+      render json: @usercountry.errors.messages, status: 422
     end
   end
 
@@ -25,12 +25,12 @@ class API::UserCountriesController < ApplicationController
   private
 
     def set_usercountries
-      @usercountries = current_user.user_countries
+      @usercountries = current_user.user_countries.includes(:country)
     end
 
     def set_usercountry
       @usercountry = current_user.user_countries.find_by(id: params[:id])
-      if @bookmark.nil?
+      if @usercountry.nil?
         render json: {message: "Cannot find '#{params[:id]}'"}, status: 400
       end
     end
