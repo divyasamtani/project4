@@ -1,9 +1,10 @@
 class API::UserCountriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_usercountries
-  before_action :set_usercountry, only: [:show, :update, :destroy]
+  before_action :set_usercountries, only: [:index]
+  before_action :set_usercountry, only: [:destroy]
 
   def index
+    render json:  @usercountries
   end
 
   def create
@@ -25,7 +26,7 @@ class API::UserCountriesController < ApplicationController
   private
 
     def set_usercountries
-      @usercountries = current_user.user_countries.includes(:country)
+      @usercountries = current_user.user_countries
     end
 
     def set_usercountry
