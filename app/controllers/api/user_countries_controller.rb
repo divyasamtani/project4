@@ -11,6 +11,7 @@ class API::UserCountriesController < ApplicationController
     @usercountry = current_user.user_countries.new(usercountry_params)
 
     if @usercountry.save
+      current_user.update_stats
       render json: @usercountry
     else
       render json: @usercountry.errors.messages, status: 422
@@ -19,6 +20,7 @@ class API::UserCountriesController < ApplicationController
 
   def destroy
     @usercountry.destroy
+    current_user.update_stats
     head :ok
   end
 

@@ -14,4 +14,11 @@ class User < ActiveRecord::Base
   has_many :inverse_friends, through: :inverse_friendships, :source => :user
   has_many :conversations
 
+  def update_stats
+    user_countries = self.user_countries
+    count = user_countries.count
+    coverage = (count.to_f / Country.count) * 100
+
+    self.update(countries_visited: count, world_coverage: coverage)
+  end
 end
