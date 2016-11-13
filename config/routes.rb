@@ -16,6 +16,9 @@ namespace :api do
     resources :countries, only: [:index]
     #  GET           /api/countries                    api/countries#index
 
+# INDEX / ADD / SHOW / DELETE USER FRIENDS
+    resources :friendships, only: [:index, :show, :create, :destroy]
+
 # GET CURRENT USER'S COUNTRIES
 
     scope '/user' do
