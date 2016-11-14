@@ -8,6 +8,10 @@ class API::UsersController < ApplicationController
   def user_profile
     render json: current_user
   end
+
+  def show
+    render json: Friendship.find_by(id: params[:id]).friend
+  end
 end
 
 

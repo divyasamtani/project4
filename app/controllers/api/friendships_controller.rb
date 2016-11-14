@@ -2,9 +2,10 @@ class API::FriendshipsController < ApplicationController
   before_action :authenticate_user!
   before_action :friend_params, only: [:create]
   before_action :set_friendship, only: [:destroy]
+  before_action :set_friendships, only: [:index]
+
 
   def index
-    render json: current_user.friends
   end
 
   def create
@@ -13,7 +14,7 @@ class API::FriendshipsController < ApplicationController
     if @friendship.save
       head 201
     else
-      render json: {message: 'Friendship cannot be saved'}, status: 404
+      render json: @friendship.errors.messages, status: 404
     end
   end
 
@@ -22,7 +23,7 @@ class API::FriendshipsController < ApplicationController
     if @friendship.destroy
       head 201
     else
-      render json:  {message: 'Friend cannot be found'}, status: 404
+      render json: @friendship.errors.messages, status: 404
     end
   end
 
@@ -30,7 +31,7 @@ class API::FriendshipsController < ApplicationController
 
 private
   def set_friendships
-    @friendships = current_user.friends
+    @friendships = current_user.friendships
     if @friendships.nil?
       render json: "You have no friends =(", status: 404
     end
