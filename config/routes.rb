@@ -2,34 +2,42 @@ Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'auth'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-# root 'statics#index'
-
 namespace :api do
 
-# GET CURRENT USER INFO FOR PROFILE
+# SHOW ALL ZEALIST USERS (TO FIND FRIEND)
+    resources :users, only: [:index]
+    #  GET           /api/users                        api/users#index
 
+# GET  CURRENT USER PROFILE
     get '/user' => "users#user_profile", defaults: {format: 'json'}
-    # GET     /api/user     api/users#user_profile {:format=>"json"}
+
+# AUTH - EDIT DETAILS
+    # PUT            /auth                    devise_token_auth/registrations#update
+
 
 # GET ALL COUNTRIES
-
     resources :countries, only: [:index]
     #  GET           /api/countries                    api/countries#index
 
-# INDEX / ADD / SHOW / DELETE USER FRIENDS
-    resources :friendships, only: [:index, :show, :create, :destroy]
-
-# GET CURRENT USER'S COUNTRIES
-
+# WITHIN SCOPE OF USER
     scope '/user' do
-      resources :user_countries, only: [:index, :create, :destroy], controller: 'user_countries', as: 'user_countries'
+
+    # COUNTRY LIST
+    resources :user_countries, only: [:index, :create, :destroy], controller: 'user_countries', as: 'user_countries'
     #  GET           /api/user/user_countries          api/user_countries#index
     #  POST          /api/user/user_countries          api/user_countries#create
     #  DELETE        /api/user/user_countries/:id      api/user_countries#destroy
 
-# GET CURRENT USER'S NOTES
 
-      resources :travel_notes
+    # FRIENDS
+    resources :friendships, only: [:index, :show, :create, :destroy]
+    #  GET           /api/user/friendships             api/friendships#index
+    #  POST          /api/user/friendships             api/friendships#create
+    #  GET           /api/user/friendships/:id         api/friendships#show
+    #  DELETE        /api/user/friendships/:id         api/friendships#destroy
+
+    # TRAVEL NOTES
+    resources :travel_notes
 
     #  GET           /api/user/travel_notes            api/travel_notes#index
     #  POST          /api/user/travel_notes            api/travel_notes#create
