@@ -9,8 +9,16 @@ class API::UsersController < ApplicationController
     render json: current_user
   end
 
+  def search_user
+    puts ">>>>>"
+    puts params[:name]
+    render json: User.where("name ILIKE ?", "%#{params[:name]}%")
+  end
+
   def show
-    render json: Friendship.find_by(id: params[:id]).friend
+    @friend = Friendship.find_by(id: params[:id]).friend
+    @friend_countries = @friend.user_countries
+    render json: {friend: @friend, friend_countries: @friend_countries}
   end
 end
 

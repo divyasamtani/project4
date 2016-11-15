@@ -8,6 +8,9 @@ namespace :api do
     resources :users, only: [:index, :show]
     #  GET           /api/users                        api/users#index
     #  GET           /api/users/:id                    api/users#show
+# USER NAME SEARCH QUERY
+    get '/user_search' => "users#search_user"
+    #  GET           /api/user_search                  api/users#search_user
 
     scope'/users/:id' do
         resources :user_countries, only: [:index]
@@ -16,6 +19,8 @@ namespace :api do
 
 # CURRENT USER PROFILE
     get '/user' => "users#user_profile", defaults: {format: 'json'}
+    #  GET           /api/user                    api/users#user_profile
+
 
 
 # GET ALL COUNTRIES
