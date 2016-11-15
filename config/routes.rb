@@ -8,9 +8,16 @@ namespace :api do
     resources :users, only: [:index, :show]
     #  GET           /api/users                        api/users#index
     #  GET           /api/users/:id                    api/users#show
+
 # USER NAME SEARCH QUERY
     get '/user_search' => "users#search_user"
     #  GET           /api/user_search                  api/users#search_user
+
+
+# FRIEND SEARCH USING COUNTRY
+    get '/friend_country_search' => "users#friend_country_search"
+    #  GET           /api/friend_country_search        api/users#friend_country_search
+
 
     scope'/users/:id' do
         resources :user_countries, only: [:index]
@@ -37,7 +44,7 @@ namespace :api do
         #  DELETE        /api/user/user_countries/:id      api/user_countries#destroy
 
 
-        # FRIENDS
+        # FRIENDSHIPS
         resources :friendships, only: [:index, :show, :create, :destroy]
         #  GET           /api/user/friendships             api/friendships#index
         #  POST          /api/user/friendships             api/friendships#create

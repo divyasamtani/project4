@@ -10,9 +10,20 @@ class API::UsersController < ApplicationController
   end
 
   def search_user
-    puts ">>>>>"
-    puts params[:name]
-    render json: User.where("name ILIKE ?", "%#{params[:name]}%")
+    if (params[:name].length >= 1)
+      # && (!current_user || current_user.friend)
+        render json: User.where("name ILIKE ?", "%#{params[:name]}%")
+    else
+      render json: []
+    end
+  end
+
+  def friend_country_search
+    if (params[:name].length >= 1)
+        render json: current_user.friends.joins(:countries).where("countries.name ILIKE ?", "#{params[:name]}")
+    else
+      render json: []
+    end
   end
 
   def show
