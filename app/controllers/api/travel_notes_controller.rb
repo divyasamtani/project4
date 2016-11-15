@@ -1,7 +1,7 @@
 class API::TravelNotesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_travelnotes, only: [:index]
-  before_action :set_travelnote, only: [:show, :create, :update, :destroy]
+  before_action :set_travelnote, only: [:show, :update, :destroy]
 
   def index
     render json:  @travelnotes
@@ -20,7 +20,7 @@ class API::TravelNotesController < ApplicationController
     @travelnote = current_user.travel_notes.new(travelnote_params)
 
     if @travelnote.save
-      # render success in Jbuilder
+      render json: @travelnote
     else
       render json: { message: "400 Bad Request" }, status: :bad_request
     end
