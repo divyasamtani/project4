@@ -1,7 +1,7 @@
 class API::TravelNotesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_travelnotes, only: [:index]
-  before_action :set_travelnote, only: [:show, :update, :destroy]
+  before_action :set_travelnote, only: [:update, :destroy]
 
   def index
     render json:  @travelnotes
@@ -9,10 +9,7 @@ class API::TravelNotesController < ApplicationController
 
   def show
     @travelnote = current_user.travel_notes.find_by_id(params[:id])
-
-    if @travelnote.nil?
-      render json: { message: "Cannot find note" }, status: :not_found
-    end
+    render json: @travelnote
   end
 
 
@@ -38,8 +35,11 @@ class API::TravelNotesController < ApplicationController
   end
 
   def destroy
-    @travelnote.destroy
-    render json: { message: "Successfully deleted" }, status: :no_content
+    if @travelnote.destroy
+      head 201
+    else
+      render json: @travelnote.errors.messages, status: 404
+    end
   end
 
 

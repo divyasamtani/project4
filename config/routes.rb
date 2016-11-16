@@ -14,11 +14,11 @@ namespace :api do
     #  GET           /api/user_search                  api/users#search_user
 
 
-# FRIEND SEARCH USING COUNTRY
+# CUSTOM METHOD TO SEARCH FOR FRIENDS USING COUNTRY
     get '/friend_country_search' => "users#friend_country_search"
     #  GET           /api/friend_country_search        api/users#friend_country_search
 
-
+# GET ALL THE COUNTRIES THAT BELONG TO A FRIEND
     scope'/users/:id' do
         resources :user_countries, only: [:index]
     #  GET           /api/users/:id/user_countries     api/user_countries#index
@@ -37,31 +37,29 @@ namespace :api do
 # WITHIN SCOPE OF USER
     scope '/user' do
 
-        # COUNTRY LIST
+    # COUNTRY LIST
         resources :user_countries, only: [:index, :create, :destroy], controller: 'user_countries', as: 'user_countries'
         #  GET           /api/user/user_countries          api/user_countries#index
         #  POST          /api/user/user_countries          api/user_countries#create
         #  DELETE        /api/user/user_countries/:id      api/user_countries#destroy
 
 
-        # FRIENDSHIPS
+    # FRIENDSHIPS
         resources :friendships, only: [:index, :show, :create, :destroy]
         #  GET           /api/user/friendships             api/friendships#index
         #  POST          /api/user/friendships             api/friendships#create
         #  GET           /api/user/friendships/:id         api/friendships#show
         #  DELETE        /api/user/friendships/:id         api/friendships#destroy
 
-        # TRAVEL NOTES
-        resources :travel_notes
+    # TRAVEL NOTES
+        resources :travel_notes, only: [:index, :show, :create, :update, :destroy]
 
         #  GET           /api/user/travel_notes            api/travel_notes#index
         #  POST          /api/user/travel_notes            api/travel_notes#create
-        #  GET           /api/user/travel_notes/new        api/travel_notes#new
-        #  GET           /api/user/travel_notes/:id/edit   api/travel_notes#edit
-        #  GET           /api/user/travel_notes/:index     api/travel_notes#show
-        #  PATCH         /api/user/travel_notes/:index     api/travel_notes#update
-        #  PUT           /api/user/travel_notes/:index     api/travel_notes#update
-        #  DELETE        /api/user/travel_notes/:index     api/travel_notes#destroy
+        #  GET           /api/user/travel_notes/:id        api/travel_notes#show
+        #  PATCH         /api/user/travel_notes/:id        api/travel_notes#update
+        #  PUT           /api/user/travel_notes/:id        api/travel_notes#update
+        #  DELETE        /api/user/travel_notes/:id        api/travel_notes#destroy
 
     end
   end
