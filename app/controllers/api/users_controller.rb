@@ -8,10 +8,11 @@ class API::UsersController < ApplicationController
   def user_profile
     render json: current_user
   end
-
+# AND friendships.friend_id = users.id
   def search_user
-    if (params[:name].length >= 1 && (!current_user.name || current_user.friends.name))
-        render json: User.where("name ILIKE ?", "%#{params[:name]}%")
+    if (params[:name].length >= 1)
+        users = User.where("users.id != ? AND users.name ILIKE ?", current_user.id ,"%#{params[:name]}%").where.not(id: current_user.friends.select(:id).pluck(:id))
+        render json: users
     else
       render json: []
     end
