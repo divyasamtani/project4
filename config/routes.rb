@@ -26,7 +26,7 @@ namespace :api do
 
 # CURRENT USER PROFILE
     get '/user' => "users#user_profile", defaults: {format: 'json'}
-    #  GET           /api/user                    api/users#user_profile
+    #  GET           /api/user                         api/users#user_profile
 
 
 
