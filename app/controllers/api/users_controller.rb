@@ -10,8 +10,7 @@ class API::UsersController < ApplicationController
   end
 
   def search_user
-    if (params[:name].length >= 1)
-      # && (!current_user || current_user.friend)
+    if (params[:name].length >= 1 && (!current_user.name || current_user.friends.name))
         render json: User.where("name ILIKE ?", "%#{params[:name]}%")
     else
       render json: []

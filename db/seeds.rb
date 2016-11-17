@@ -21,7 +21,7 @@ Country.create ([
   {name: "Bhutan", country_code: "BT", continent: 'Asia'},
   {name: "Jamaica", country_code: "JM", continent: 'North America'},
   {name: "Botswana", country_code: "BW", continent: 'Africa' },
-  {name: "Brazil", country_code: "BR", continent: 'South Africa'},
+  {name: "Brazil", country_code: "BR", continent: 'South America'},
   {name: "Bahamas", country_code: "BS", continent: 'North America'},
   {name: "Belarus", country_code: "BY", continent: 'Europe'},
   {name: "Belize", country_code: "BZ", continent: 'North America'},
