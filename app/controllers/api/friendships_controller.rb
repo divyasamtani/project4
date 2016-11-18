@@ -2,6 +2,7 @@ class API::FriendshipsController < ApplicationController
   before_action :authenticate_user!
   before_action :friend_params, only: [:create]
   before_action :set_friendship, only: [:destroy]
+  before_action :set_friendship2, only: [:destroy]
   before_action :set_friendships, only: [:index]
 
 
@@ -9,22 +10,28 @@ class API::FriendshipsController < ApplicationController
   end
 
   def create
-    @friendship = current_user.friendships.new(friend_params)
+    @friendship  = current_user.friendships.new(friend_params)
+    @friendship2 = Friendship.new(user_id: friend_params[:friend_id], friend_id: current_user.id)
 
-    if @friendship.save
+    @friendship.transaction do
+      @friendship.save
+      @friendship2.save
+    end
+
+    if @friendship.id && @friendship2.id
       head 201
     else
-      render json: @friendship.errors.messages, status: 404
+      render json: {friendship: @friendship.errors.messages, friendship2: @friendship2.errors.messages}, status: 404
     end
   end
 
-
   def destroy
-    if @friendship.destroy
-      head 201
-    else
-      render json: @friendship.errors.messages, status: 404
+    @friendship.transaction do
+      @friendship.destroy
+      @friendship2.destroy
     end
+
+    head 201
   end
 
 # PRIVATE METHODS
@@ -32,8 +39,13 @@ class API::FriendshipsController < ApplicationController
 private
   def set_friendships
     @friendships = current_user.friendships
-    if @friendships.nil?
-      render json: "You have no friends =(", status: 404
+  end
+
+  def set_friendship2
+    @friendship2 = Friendship.find_by(user_id: @friendship.friend_id, friend_id: current_user.id)
+
+    if @friendship2.nil?
+      render json: "Friend cannot be found", status: 404
     end
   end
 
