@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update, keys: [:location_status, :bio])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:location_status, :bio, :travel_status])
   end
 end
 

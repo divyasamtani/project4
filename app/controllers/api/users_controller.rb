@@ -1,5 +1,6 @@
 class API::UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_friendship, only: [:show]
 
   def index
     render json: User.all
@@ -27,9 +28,18 @@ class API::UsersController < ApplicationController
   end
 
   def show
-    @friend = Friendship.find_by(id: params[:id]).friend
+    @friend = @friendship.friend
     @friend_countries = @friend.user_countries
     render json: {friend: @friend, friend_countries: @friend_countries}
+  end
+
+private
+
+  def set_friendship
+    @friendship = Friendship.find_by(id: params[:id])
+    if (@friendship.nil?)
+      render json: {errors: "Cannot find Friendship with id #{params[:id]}"}
+    end
   end
 end
 

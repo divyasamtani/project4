@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   def update_stats
     user_countries = self.user_countries
     count = user_countries.count
-    coverage = (count.to_f / Country.count) * 100
+    coverage = ((count.to_f / Country.count) * 100).round(2)
 
     self.update(countries_visited: count, world_coverage: coverage)
   end
