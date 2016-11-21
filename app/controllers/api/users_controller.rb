@@ -9,6 +9,7 @@ class API::UsersController < ApplicationController
     render json: current_user
   end
 # AND friendships.friend_id = users.id
+
   def search_user
     if (params[:name].length >= 1)
         users = User.where("users.id != ? AND users.name ILIKE ?", current_user.id ,"%#{params[:name]}%").where.not(id: current_user.friends.select(:id).pluck(:id))
@@ -29,7 +30,8 @@ class API::UsersController < ApplicationController
   def show
     @friend = User.find_by(id: params[:id])
     @friend_countries = @friend.user_countries
-    render json: {friend: @friend, friend_countries: @friend_countries}
+    @friend_friends = @friend.friends
+    render json: {friend: @friend, friend_countries: @friend_countries, friend_friends: @friend_friends}
   end
 end
 

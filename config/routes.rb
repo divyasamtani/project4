@@ -28,8 +28,6 @@ namespace :api do
     get '/user' => "users#user_profile", defaults: {format: 'json'}
     #  GET           /api/user                         api/users#user_profile
 
-
-
 # GET ALL COUNTRIES
     resources :countries, only: [:index]
     #  GET           /api/countries                    api/countries#index
